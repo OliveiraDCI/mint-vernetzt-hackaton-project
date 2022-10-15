@@ -2,6 +2,7 @@
 
 import { trigram } from "@drorgl/n-gram";
 console.clear();
+console.log("--------------------------------");
 
 const generalInterests = [
   "Wissenschaft",
@@ -15,10 +16,6 @@ const generalInterests = [
   "Energie",
   "Umwelt und Natur",
 ];
-
-const provideSupport = [];
-const getSupport = [];
-const interestMatches = [];
 
 const data = [
   {
@@ -235,6 +232,67 @@ const trigramSimilarity = (input1 = "", input2 = "") => {
   return total.length === 0 ? 0 : common.length / total.length;
 };
 
-let str1 = convertString("Kontakt zu Universitäten/Hochschulen");
-let str2 = convertString("Kontakt zur fussball");
-console.log(trigramSimilarity(str1, str2));
+// data resumed sample for reference
+/**
+{
+    _id: "634ab8da13075ae2b7bbee2f",
+    interests: ["Innovationen", "Diversität", "Social Impact"],
+    competencies: ["Softwareentwicklung"],
+    offer: [
+      "Digitale Kompetenzen",
+      "Dozierendentätigkeiten",
+      "Kontakt zu Universitäten/Hochschulen",
+    ],
+    seek: [
+      "Gute Praxis und Inspirationen für Kurse",
+      "Vernetzung",
+      "Kontakt zu Schulen",
+      "Gute Praxis und Inspirationen für Kurse",
+    ],
+  },
+ */
+
+let iCouldGiveSupport;
+let iCouldGetSupport;
+let myInterestMatches;
+
+let result = data.forEach((user, _, arr) => {
+  const provideSupport = [];
+  const getSupport = [];
+  const interestMatches = [];
+
+  let userInterests = convertString(
+    user.interests.concat(user.competencies).join("")
+  );
+  let userSeek = convertString(user.seek.join(""));
+  let userOffer = convertString(user.offer.concat(user.competencies).join(""));
+
+  arr.find((item) => {
+    let otherUserSeeks = convertString(item.seek.join(""));
+    if (Number(trigramSimilarity(userSeek, otherUserSeeks)) > 0.5) {
+      provideSupport.push(item._id);
+    }
+
+    //
+    let otherUserOffers = convertString(
+      item.offer.concat(item.competencies).join("")
+    );
+    if (Number(trigramSimilarity(userOffer, otherUserOffers)) > 0.5) {
+      getSupport.push(item._id);
+    }
+
+    //
+    let otherUserInterests = convertString(
+      item.interests.concat(item.competencies).join("")
+    );
+    if (Number(trigramSimilarity(userInterests, otherUserInterests)) > 0.5) {
+      interestMatches.push(item._id);
+    }
+  });
+  iCouldGiveSupport = [...new Set(provideSupport)];
+  iCouldGetSupport = [...new Set(getSupport)];
+  myInterestMatches = [...new Set(interestMatches)];
+});
+console.log("give", iCouldGiveSupport);
+console.log("get", iCouldGetSupport);
+console.log("interests", myInterestMatches);
