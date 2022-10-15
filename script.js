@@ -253,15 +253,15 @@ data.forEach((user, _, arr) => {
   // Matching
   arr.find((item) => {
     // User offers matching what other users seeks
-    let otherUserSeek = convertString(
-      item.offer.concat(item.competencies).join("")
-    );
+    let otherUserSeek = convertString(item.seek.join(""));
     if (Number(trigramSimilarity(userOffer, otherUserSeek)) > 0.5) {
       provideSupport.push(item._id);
     }
 
     // User seeking matching what other users offers
-    let otherUserOffers = convertString(item.seek.join(""));
+    let otherUserOffers = convertString(
+      item.offer.concat(item.competencies).join("")
+    );
     if (Number(trigramSimilarity(userSeek, otherUserOffers)) > 0.5) {
       getSupport.push(item._id);
     }
