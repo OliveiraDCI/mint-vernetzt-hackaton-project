@@ -24,6 +24,35 @@ body::-webkit-scrollbar {
 }
 
 main {
+  border: px dashed #222;
+  margin: 1em;
   padding: 1em;
-  height: 6000px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+select {
+  padding: 0.5rem 1.5rem;
+}
+
+h3 {
+  margin-top: 2em;
+}
+
+section {
+  border: 1px solid rgba(153, 153, 153, 0.589);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.card {
+  padding: 1em 2em;
+  margin: 0.5em;
+  border: 1px dashed #fff;
+  border-radius: 20px;
 }
