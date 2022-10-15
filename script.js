@@ -4,6 +4,10 @@ import { trigram } from "@drorgl/n-gram";
 console.clear();
 console.log("--------------------------------");
 
+let iCouldGiveSupport;
+let iCouldGetSupport;
+let myInterestMatches;
+
 const generalInterests = [
   "Wissenschaft",
   "Technologie",
@@ -232,56 +236,37 @@ const trigramSimilarity = (input1 = "", input2 = "") => {
   return total.length === 0 ? 0 : common.length / total.length;
 };
 
-// data resumed sample for reference
-/**
-{
-    _id: "634ab8da13075ae2b7bbee2f",
-    interests: ["Innovationen", "Diversität", "Social Impact"],
-    competencies: ["Softwareentwicklung"],
-    offer: [
-      "Digitale Kompetenzen",
-      "Dozierendentätigkeiten",
-      "Kontakt zu Universitäten/Hochschulen",
-    ],
-    seek: [
-      "Gute Praxis und Inspirationen für Kurse",
-      "Vernetzung",
-      "Kontakt zu Schulen",
-      "Gute Praxis und Inspirationen für Kurse",
-    ],
-  },
- */
+// Mapping and Matching
 
-let iCouldGiveSupport;
-let iCouldGetSupport;
-let myInterestMatches;
-
-let result = data.forEach((user, _, arr) => {
+data.forEach((user, _, arr) => {
   const provideSupport = [];
   const getSupport = [];
   const interestMatches = [];
 
+  // Mapping
   let userInterests = convertString(
     user.interests.concat(user.competencies).join("")
   );
   let userSeek = convertString(user.seek.join(""));
   let userOffer = convertString(user.offer.concat(user.competencies).join(""));
 
+  // Matching
   arr.find((item) => {
-    let otherUserSeeks = convertString(item.seek.join(""));
-    if (Number(trigramSimilarity(userSeek, otherUserSeeks)) > 0.5) {
+    // User offers matching other users seekings
+    let otherUserOffers = convertString(item.seek.join(""));
+    if (Number(trigramSimilarity(userSeek, otherUserOffers)) > 0.5) {
       provideSupport.push(item._id);
     }
 
-    //
-    let otherUserOffers = convertString(
+    // User seekings matching other users offers
+    let otherUserSeek = convertString(
       item.offer.concat(item.competencies).join("")
     );
-    if (Number(trigramSimilarity(userOffer, otherUserOffers)) > 0.5) {
+    if (Number(trigramSimilarity(userOffer, otherUserSeek)) > 0.5) {
       getSupport.push(item._id);
     }
 
-    //
+    // User interest matches other user interests
     let otherUserInterests = convertString(
       item.interests.concat(item.competencies).join("")
     );
@@ -293,6 +278,7 @@ let result = data.forEach((user, _, arr) => {
   iCouldGetSupport = [...new Set(getSupport)];
   myInterestMatches = [...new Set(interestMatches)];
 });
+
 console.log("give", iCouldGiveSupport);
 console.log("get", iCouldGetSupport);
 console.log("interests", myInterestMatches);
