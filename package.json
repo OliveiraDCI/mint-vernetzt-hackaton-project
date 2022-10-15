@@ -1,0 +1,25 @@
+{
+  "name": "mint-vernetzt",
+  "version": "1.0.0",
+  "description": "## Hackaton group #3",
+  "main": "references.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OliveiraDCI/mint-vernetzt-hackaton-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OliveiraDCI/mint-vernetzt-hackaton-project/issues"
+  },
+  "homepage": "https://github.com/OliveiraDCI/mint-vernetzt-hackaton-project#readme",
+  "devDependencies": {
+    "@drorgl/n-gram": "^1.1.2",
+    "n-gram": "^2.0.1"
+  }
+}
