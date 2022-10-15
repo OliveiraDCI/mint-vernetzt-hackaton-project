@@ -8,7 +8,7 @@
 - Idea: Display matched results automatically, as soon as the user logs in.
 - Project goal:
   - Algorithm functionality to match users, and simple page layout to display output.
-  - Create a project 'seed' that can grow/scale and further expand its complexity level for forther matching refinement.
+  - Create a project 'seed' that can grow/scale and further expand the complexity level of matching refinement.
   - Utilize best practices, considering also performance in execution.
 
 ---
