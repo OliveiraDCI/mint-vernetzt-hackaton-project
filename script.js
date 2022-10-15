@@ -4,6 +4,10 @@ import { trigram } from "@drorgl/n-gram";
 console.clear();
 console.log("--------------------------------");
 
+const sections = document.querySelectorAll("section");
+
+sections.forEach(i=>console.log(i);)
+
 let iCouldGiveSupport;
 let iCouldGetSupport;
 let myInterestMatches;
@@ -252,17 +256,17 @@ data.forEach((user, _, arr) => {
 
   // Matching
   arr.find((item) => {
-    // User offers matching other users seekings
-    let otherUserOffers = convertString(item.seek.join(""));
-    if (Number(trigramSimilarity(userSeek, otherUserOffers)) > 0.5) {
-      provideSupport.push(item._id);
-    }
-
-    // User seekings matching other users offers
+    // User offers matching what other users seeks
     let otherUserSeek = convertString(
       item.offer.concat(item.competencies).join("")
     );
     if (Number(trigramSimilarity(userOffer, otherUserSeek)) > 0.5) {
+      provideSupport.push(item._id);
+    }
+
+    // User seeking matching what other users offers
+    let otherUserOffers = convertString(item.seek.join(""));
+    if (Number(trigramSimilarity(userSeek, otherUserOffers)) > 0.5) {
       getSupport.push(item._id);
     }
 
