@@ -4,10 +4,6 @@ import { trigram } from "@drorgl/n-gram";
 console.clear();
 console.log("--------------------------------");
 
-const sections = document.querySelectorAll("section");
-
-sections.forEach(i=>console.log(i);)
-
 let iCouldGiveSupport;
 let iCouldGetSupport;
 let myInterestMatches;
